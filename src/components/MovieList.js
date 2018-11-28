@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import MovieForm from "./MovieForm";
+
 function longAwardText(movie) {
   if (!movie.hasOscars) {
     return <p>Great movie but no Oscars. Rating is {movie.imdbRating}.</p>;
@@ -60,6 +62,13 @@ class MovieList extends Component {
     this.setState({ movies });
   }
 
+  addNewMovie(newMovie) {
+    const { movies } = this.state;
+    // "unshift()" to add the item to the start
+    movies.unshift(newMovie);
+    this.setState({ movies });
+  }
+
   toggleOscarFilter() {
     const { showOscarFilmsOnly } = this.state;
     // set the state to the opposite boolean value that it had before
@@ -105,6 +114,9 @@ class MovieList extends Component {
     return (
       <section className="MovieList">
         <h2>Movie List Component</h2>
+
+        {/* send the "addNewMovie" function so the form can update the array */}
+        <MovieForm addNewMovie={newMovie => this.addNewMovie(newMovie)} />
 
         <button onClick={() => this.toggleOscarFilter()}>
           Show {showOscarFilmsOnly ? "All Films" : "Oscar Winners Only"}
